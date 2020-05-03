@@ -1,18 +1,29 @@
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 
+const Statistic = ({text,value}) => {
+  return(
+    <p>{text} {value}</p>
+  )
+}
+
 const Statistics = ({good, bad, neutral}) => {
+  if (good === 0 && bad === 0 && neutral ===  0) {
+    return (
+      <p>No feedback given</p>
+    )
+  }
   return(
   <>
     <h1>Statistics</h1>
-    <p>Good {good} </p>
-    <p>Neutral {neutral} </p>
-    <p>Bad {bad} </p>
-    <p>All {good + neutral + bad} </p>
-    <p>Average
-      {isNaN((good*1 + neutral*0 + bad*(-1)) / (good + neutral + bad)) ? 0 : (good*1 + neutral*0 + bad*(-1)) / (good + neutral + bad)}
-    </p>
-    <p>Positive {isNaN(good / (good + neutral + bad) * 100) ? 0 : good / (good + neutral + bad) } % </p>
+    <Statistic text = 'Good' value = {good} />
+    <Statistic text = 'Neutral' value = {neutral} />
+    <Statistic text = 'Bad' value = {bad} />
+    <Statistic text = 'All' value = {good + neutral + bad} />
+    <Statistic
+      text = 'Average' value = {isNaN((good*1 + neutral*0 + bad*(-1)) / (good + neutral + bad)) ? 0 : (good*1 + neutral*0 + bad*(-1)) / (good + neutral + bad)}
+    />
+    <Statistic text = 'Positive' value = {isNaN(good / (good + neutral + bad) * 100) ? 0 : good / (good + neutral + bad) } />
   </>
   )
 }
