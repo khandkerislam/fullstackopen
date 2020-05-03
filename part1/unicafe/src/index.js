@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 const Statistic = ({text,value}) => {
   return(
-    <p>{text} {value}</p>
+    <td>{text} {value}</td>
   )
 }
 
@@ -16,14 +16,22 @@ const Statistics = ({good, bad, neutral}) => {
   return(
   <>
     <h1>Statistics</h1>
-    <Statistic text = 'Good' value = {good} />
-    <Statistic text = 'Neutral' value = {neutral} />
-    <Statistic text = 'Bad' value = {bad} />
-    <Statistic text = 'All' value = {good + neutral + bad} />
-    <Statistic
-      text = 'Average' value = {isNaN((good*1 + neutral*0 + bad*(-1)) / (good + neutral + bad)) ? 0 : (good*1 + neutral*0 + bad*(-1)) / (good + neutral + bad)}
-    />
-    <Statistic text = 'Positive' value = {isNaN(good / (good + neutral + bad) * 100) ? 0 : good / (good + neutral + bad) } />
+    <table>
+      <tr><Statistic text = 'Good' value = {good} /></tr>
+      <tr><Statistic text = 'Neutral' value = {neutral} /></tr>
+      <tr><Statistic text = 'Bad' value = {bad} /></tr>
+      <tr>
+        <Statistic text = 'All' value = {good + neutral + bad} />
+      </tr>
+      <tr>
+        <Statistic
+          text = 'Average' value = {isNaN((good*1 + neutral*0 + bad*(-1)) / (good + neutral + bad)) ? 0 : (good*1 + neutral*0 + bad*(-1)) / (good + neutral + bad)}
+        />
+      </tr>
+      <tr>
+        <Statistic text = 'Positive' value = {isNaN(good / (good + neutral + bad) * 100) ? 0 : good / (good + neutral + bad) } />
+      </tr>
+    </table>
   </>
   )
 }
