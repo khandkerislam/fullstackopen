@@ -1,29 +1,27 @@
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 
-const Button = ({onClick, text}) => <button onClick = {onClick}> {text} </button>
-
 const App = () => {
   // save lciks of each button to own state
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
-  const handleGood = ()=> {setGood(good + 1)}
-  const handleNeutral = ()=> {setNeutral(neutral + 1)}
-  const handleBad = ()=> {setBad(bad + 1)}
-
-
   return (
     <div>
       <h1>Give Feedback</h1>
-      <Button onClick = {handleGood} text = 'good' />
-      <Button onClick = {handleNeutral} text = 'neutral' />
-      <Button onClick = {handleBad} text = 'bad' />
+      <button onClick={() => setGood(good + 1)}>good</button>
+      <button onClick={() => setNeutral(neutral + 1)}>neutral</button>
+      <button onClick={() => setBad(bad + 1)}>bad</button>
       <h1>Statistics</h1>
       <p>Good {good} </p>
       <p>Neutral {neutral} </p>
       <p>Bad {bad} </p>
+      <p>All {good + neutral + bad} </p>
+      <p>Average
+        {isNaN((good*1 + neutral*0 + bad*(-1)) / (good + neutral + bad)) ? 0 : (good*1 + neutral*0 + bad*(-1)) / (good + neutral + bad)}
+      </p>
+      <p>Positive {isNaN(good / (good + neutral + bad) * 100) ? 0 : good / (good + neutral + bad) } % </p>
     </div>
 
   )
