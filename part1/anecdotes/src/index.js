@@ -1,23 +1,61 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Button = ({onClick}) => (
+
+const Button = ({onClick, text}) => (
   <button onClick={onClick}>
-    Get a random quote
+    {text}
   </button>
 )
 
-const App = (props) => {
+const Anecdote = ({anecdote,header,vote}) => (
+  <>
+    <h3>{header}</h3>
+    <p>{anecdote}</p>
+    <p>has {vote}</p>
+  </>
+)
 
-  const [selected, setSelected] = useState(0)
+const App = ({anecdotes,votes}) => {
+
+  const [selected, setSelected] = useState(0);
+  const [vote, setVote] = useState(votes);
+
+  const getRandomNumber = () => {
+    let rndNumber;
+    while (true) {
+      rndNumber = Math.floor(Math.random() * anecdotes.length);
+      if(selected !== rndNumber){
+        return rndNumber;
+      }
+    }
+  }
+
+  const handleClickNext = () => {
+    setSelected(getRandomNumber());
+  }
+
+  const handleClickVote = (selected) => {
+    setVote(vote.map((item,index) =>{
+      if(index === selected){
+        return item + 1;
+      }
+      else{
+        return item;
+      }
+    }))
+  }
 
   return (
     <div>
-      <Button onClick={()=>setSelected(Math.floor(Math.random()*anecdotes.length))}/>
-      {props.anecdotes[selected]}
+      <Anecdote anecdote={anecdotes[selected]} header={"Anecdote of the Day"} vote={vote[selected]} />
+      <Button onClick={()=>handleClickVote(selected)} text = 'vote' yaabbadoo='lol'/>
+      <Button onClick={()=>handleClickNext()} text='next anecdote'/>
     </div>
   )
 }
+
+const points = [0,0,0,0,0,0];
 
 const anecdotes = [
   'If it hurts, do it more often',
@@ -29,6 +67,6 @@ const anecdotes = [
 ]
 
 ReactDOM.render(
-  <App anecdotes={anecdotes} />,
+  <App anecdotes={anecdotes} votes={points}/>,
   document.getElementById('root')
 )

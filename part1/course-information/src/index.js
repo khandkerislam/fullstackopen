@@ -1,62 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-const Header = (props) => {
-  return (
-    <h1>{props.course.name}</h1>
-  )
-}
-
-const Part = (props) =>{
-  return (
-    <p>{props.part} {props.exercise}</p>
-  )
-}
-
-const Content = (props) => {
-  return (
-    <>
-      <Part part = {props.course.parts[0].name} exercise = {props.course.parts[0].exercises}/>
-      <Part part = {props.course.parts[1].name} exercise = {props.course.parts[1].exercises}/>
-      <Part part = {props.course.parts[2].name} exercise = {props.course.parts[2].exercises}/>
-    </>
-  )
-}
-
-const Footer = (props) => {
-  let all = props.course.parts[0].exercises + props.course.parts[1].exercises + props.course.parts[2].exercises
-  return(
-    <>
-      <p>Number of exercises {all}</p>
-    </>
-  )
-}
-
-const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
+const Hello = ({name, age}) => {
+  const bornYear = () => new Date().getFullYear() - age
 
   return (
     <div>
-      <Header course = {course}/>
-      <Content course = {course}/>
-      <Footer course = {course}/>
+      <p>
+        Hello {name}, you are {age} years old
+      </p>
+      <p>So you were probably born in {bornYear()}</p>
     </div>
+  )
+}
+
+const Display = ({counter}) => <div>{counter}</div>
+
+const Button = ({text,handleClick}) => (
+    <button onClick = {handleClick}>
+      {text}
+    </button>
+)
+
+const App = () => {
+  const [ counter, setCounter ] = useState(0)
+
+  const increaseByOne = () => setCounter(counter + 1)
+
+  const decreaseByOne = () => setCounter(counter - 1)
+
+  const setToZero = () => setCounter(0)
+
+  return (
+  <div>
+    <Display counter = {counter}/>
+    <Button
+      handleClick={increaseByOne}
+      text='plus'
+    />
+    <Button
+      handleClick={setToZero}
+      text='zero'
+    />
+    <Button
+      handleClick={decreaseByOne}
+      text='minus'
+    />
+  </div>
   )
 }
 
