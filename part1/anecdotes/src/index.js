@@ -12,7 +12,7 @@ const Anecdote = ({anecdote,header,vote}) => (
   <>
     <h3>{header}</h3>
     <p>{anecdote}</p>
-    <p>has {vote}</p>
+    <p>has {vote} votes</p>
   </>
 )
 
@@ -45,12 +45,13 @@ const App = ({anecdotes,votes}) => {
       }
     }))
   }
-
+  const max = vote.indexOf(Math.max(...vote))
   return (
     <div>
       <Anecdote anecdote={anecdotes[selected]} header={"Anecdote of the Day"} vote={vote[selected]} />
       <Button onClick={()=>handleClickVote(selected)} text = 'vote' yaabbadoo='lol'/>
       <Button onClick={()=>handleClickNext()} text='next anecdote'/>
+      <Anecdote anecdote={anecdotes[max]} header='Anecdote with most votes' vote={vote[max]}/>
     </div>
   )
 }
