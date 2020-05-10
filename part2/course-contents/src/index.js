@@ -8,7 +8,10 @@ const Header = ({ name }) => {
 }
 
 const Total = ({ total }) => {
-  const sum = total[0].exercises + total[1].exercises + total[2].exercises + total[3].exercises
+  const sum = total.reduce((s,p)=>
+  {
+    return s+p.exercises
+  },0)
   return(
     <p>Number of exercises {sum}</p>
   )
