@@ -1,8 +1,41 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 
+const Country = ({country,toggle}) => {
+    const [show, setShow] = useState(toggle);
+
+    const handleClick = (show) => {
+        setShow(!show)
+    }
+
+    if(!show){
+        return(
+            <>
+                <h1>{country.name}</h1>
+                <button onClick={()=>handleClick(show)}>Show Country</button>
+            </>
+        )
+    }
+    else if(show){
+        return(
+            <>
+                <h1>{country.name}</h1>
+                <button onClick={()=>handleClick(show)}>Hide Country</button>
+                <p>Capital {country.capital}</p>
+                <p>Population {country.population}</p>
+                <ul>
+                    {country.languages.map((language,index)=><li key={index}>{language.name}</li>)}
+                </ul>
+                <img src={country.flag} alt="flag" height="200" width="200"/>
+            </>
+        )
+    }
+}
+
 const Results = ({input,countries}) => {
+
     const matches = countries.filter(country => country.name.toLowerCase().includes(input))
+
     if(input == ''){
         return(<p>{input}</p>)
     }
@@ -12,24 +45,16 @@ const Results = ({input,countries}) => {
         )
     }
     else if(matches.length==1){
-        const match = matches[0];
+        const match = countries[0];
         return(
-            <>
-                <h1>{match.name}</h1>
-                <p>Capital {match.capital}</p>
-                <p>Population {match.population}</p>
-                <ul>
-                    {match.languages.map((language,index)=><li key={index}>{language.name}</li>)}
-                </ul>
-                <img src={match.flag} alt="flag" height="200" width="200"/>
-            </>
+            <Country country={match} toggle={1} />
         )
     }
     else if(matches.length<=10){
         return(
             <>
                 <ul>
-                    {matches.map(match=><li key={match.numericCode}>{match.name}</li>)}
+                    {matches.map(match=><li key={match.numericCode}><Country country={match} toggle={0}/></li>)}
                 </ul>
             </>
         )
